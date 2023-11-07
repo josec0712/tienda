@@ -4,27 +4,28 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 import lombok.Data;
 
-/**
- *
- * @author Dennis
- */
 @Data
 @Entity
-@Table(name = "producto")
-
-/* Serializaci[on va almacenar datos de la bd*/
-
+@Table(name="producto")
 public class Producto implements Serializable {
+    private static final long serialVersionUID = 1L;
     
-    private static final long serialVersionUID = 1L; /*Poder hacer ciclo de sumatoria*/
-    
-    @Id /*Id es la llave de la tabla producto*/
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_producto")
-    private long idProducto;
+    @Column(name="id_producto")
+    private Long idProducto;
+    //private Long idCategoria;  ya no se usa por el @manyToOne
     private String descripcion;
+    private String detalle;
+    private double precio;
+    private int existencias;
     private String rutaImagen;
     private boolean activo;
+
+    @ManyToOne
+    @JoinColumn(name="id_categoria")
+    Categoria categoria;
+
 
     public Producto() {
     }
@@ -33,5 +34,5 @@ public class Producto implements Serializable {
         this.descripcion = descripcion;
         this.activo = activo;
     }
-
+    
 }
